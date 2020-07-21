@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "connection/Server.h"
 
 
@@ -10,7 +11,11 @@ int main() {
         boost::asio::io_service io_service;
         Server server(io_service, 12000);
 
-        server.bind_command("kek", []{std::cout<<"lel";});
+        server.bind_command("kek", []{
+            std::ofstream f("test.txt");
+            f << "kek";
+            f.close();
+        });
 
         server.start();
     }

@@ -33,8 +33,20 @@ void Server::send(tcp::socket socket, const std::string& message) {
 
 void Server::resolve(std::string data) {
     const std::lock_guard<std::mutex> lock(m_mutex);
+    std::string key = data;
 
-    m_functionalities.at(data)();
+    if (!key.empty()) {
+        key.pop_back();
+    } else {
+        std::cerr << "Error: Received empty request!" << std::endl;
+    }
+
+    if (m_functionalities.find(key) != m_functionalities.end()) {
+        std::cout << "Executing command: " << key << std::endl;
+        m_functionalities.at(key)();
+    } else {
+        std::cerr << "Error: Client sent unknown request: " << data << std::endl;
+    }
 }
 
 void Server::resolve_error(const boost::system::error_code &error) {
