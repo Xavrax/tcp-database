@@ -1,4 +1,4 @@
-add_library(l_general STATIC Server.cpp
+add_library(connection_lib STATIC Server.cpp
                              ConnectionHandler.cpp
                              IDataResolver.h
         )

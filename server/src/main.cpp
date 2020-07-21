@@ -1,5 +1,5 @@
 #include <iostream>
-#include "general/Server.h"
+#include "connection/Server.h"
 
 
 int main() {
