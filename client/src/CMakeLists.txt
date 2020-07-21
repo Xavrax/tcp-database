@@ -1,1 +1,1 @@
-add_executable(client src/main.cpp)
+add_executable(client main.cpp)
