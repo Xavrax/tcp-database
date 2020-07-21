@@ -9,6 +9,9 @@ int main() {
     {
         boost::asio::io_service io_service;
         Server server(io_service, 12000);
+
+        server.bind_command("kek", []{std::cout<<"lel";});
+
         server.start();
     }
     catch(std::exception& e)

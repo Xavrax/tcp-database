@@ -33,6 +33,8 @@ void Server::send(tcp::socket socket, const std::string& message) {
 
 void Server::resolve(std::string data) {
     const std::lock_guard<std::mutex> lock(m_mutex);
+
+    m_functionalities.at(data)();
 }
 
 void Server::resolve_error(const boost::system::error_code &error) {
@@ -55,9 +57,13 @@ void Server::start_accept() {
     );
 }
 
-void Server::handle_accept(ConnectionHandler::Ptr connection, const boost::system::error_code &error) {
+void Server::handle_accept(const ConnectionHandler::Ptr& connection, const boost::system::error_code &error) {
     if (!error) {
         connection->start();
     }
     start_accept();
+}
+
+void Server::bind_command(const std::string& command, std::function<void()> function) {
+    m_functionalities.emplace(command, function);
 }
